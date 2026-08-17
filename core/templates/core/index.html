@@ -1,0 +1,948 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สาขาวิชาวิทยาการคอมพิวเตอร์ | มหาวิทยาลัยราชภัฏศรีสะเกษ (CS@SSKRU)</title>
+    <meta name="description" content="หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์ คณะศิลปศาสตร์และวิทยาศาสตร์ มหาวิทยาลัยราชภัฏศรีสะเกษ มุ่งเน้นการผลิตบัณฑิตที่มีความรู้ความสามารถด้านการพัฒนาซอฟต์แวร์ ปัญญาประดิษฐ์ และวิทยาการข้อมูล">
+
+    <!-- Favicon (โลโก้บนแท็บเบราว์เซอร์) -->
+    <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'core/images/logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'core/images/logo.png' %}">
+
+    <!-- Google Fonts: Prompt, Sarabun & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome 6 & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="90">
+
+    <!-- 1. Header & Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">
+                <img src="{% static 'core/images/logo.png' %}" alt="CS SSKRU Logo" class="navbar-logo-img">
+                <div class="d-flex flex-column">
+                    <span style="font-weight:700;line-height:1.1;letter-spacing:-0.3px">วิทยาการคอมพิวเตอร์</span>
+                    <small style="font-size:0.75rem;color:#f472b6;font-weight:400">มรภ.ศรีสะเกษ</small>
+                </div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-1">
+                    <li class="nav-item"><a class="nav-link" href="#page-top"><i class="bi bi-house-door me-1"></i> หน้าแรก</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about"><i class="bi bi-info-circle me-1"></i> เกี่ยวกับเรา</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#courses"><i class="bi bi-book me-1"></i> หลักสูตร</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#schedule"><i class="bi bi-calendar-event me-1"></i> แผนการเรียน</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#lecturers"><i class="bi bi-people me-1"></i> คณาจารย์</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact"><i class="bi bi-envelope me-1"></i> ติดต่อเรา</a></li>
+                    <li class="nav-item ms-lg-2"><a class="nav-link btn-nav-apply" href="https://www.oass.sskru.ac.th/std.sskru/s1.html" target="_blank"><i class="bi bi-mortarboard-fill me-1"></i> สมัครเรียน</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Banner Carousel -->
+    <header class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% if banners %}
+                    {% for banner in banners %}
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                    {% endfor %}
+                {% else %}
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                {% endif %}
+            </div>
+
+            <div class="carousel-inner">
+                {% if banners %}
+                    {% for banner in banners %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="hero-slide" style="background-image: url('{% if banner.image %}{{ banner.image.url }}{% else %}https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80{% endif %}');">
+                            <div class="hero-overlay"></div>
+                            <div class="container hero-content">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-7">
+                                        <div class="hero-badge-tag"><i class="bi bi-mortarboard-fill"></i> 🎓 มุ่งสู่วิชาชีพไอทีและผู้นำนวัตกรรมเทคโนโลยี</div>
+                                        <h1 class="hero-title">{{ banner.title }}</h1>
+                                        {% if banner.subtitle %}<p class="hero-subtitle">{{ banner.subtitle }}</p>{% endif %}
+                                        <div class="d-flex flex-wrap gap-3 mt-4">
+                                            <a href="https://www.oass.sskru.ac.th/std.sskru/s1.html" target="_blank" class="btn btn-purple-gradient btn-lg rounded-pill px-4 py-3 shadow-lg fw-semibold"><i class="bi bi-mortarboard-fill me-2"></i> สมัครเข้าศึกษาต่อ</a>
+                                            <a href="#courses" class="btn btn-outline-light btn-lg rounded-pill px-4 py-3 fw-medium"><i class="bi bi-book me-2"></i> ข้อมูลวิชาหลักสูตร</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Glowing Logo Widget (ตราโลโก้พร้อมลูกเล่นวงแหวนโกลว์และป้ายเทคโนโลยีลอยได้) -->
+                                    <div class="col-lg-5 d-none d-lg-block text-center">
+                                        <div class="logo-widget-wrapper">
+                                            <div class="logo-glow-ring"></div>
+                                            <img src="{% static 'core/images/logo.png' %}" alt="CS SSKRU Logo" class="img-fluid hero-main-logo">
+
+                                            <!-- Interactive Orbiting Badges -->
+                                            <div class="orbit-badge badge-pos-1"><i class="bi bi-code-slash" style="color:#7c3aed"></i> Software Dev</div>
+                                            <div class="orbit-badge badge-pos-2"><i class="bi bi-robot" style="color:#ec4899"></i> Artificial Intelligence</div>
+                                            <div class="orbit-badge badge-pos-3"><i class="bi bi-bar-chart-line" style="color:#8b5cf6"></i> Data Science</div>
+                                            <div class="orbit-badge badge-pos-4"><i class="bi bi-shield-check" style="color:#06b6d4"></i> Cybersecurity</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Strategic Tabs Section -->
+    <section class="section-padding bg-white" id="about">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge rounded-pill badge-purple-glow px-3 py-2 mb-2 fw-semibold" style="font-size:0.95rem">ข้อมูลรายละเอียดหลักสูตรเชิงกลยุทธ์</span>
+                <h2 class="section-title">โครงสร้างเชิงเป้าหมาย & ผลลัพธ์การเรียนรู้</h2>
+                <p class="section-subtitle">ผสานทิศทางเพื่อสร้างผลลัพธ์การเรียนรู้เชิงทักษะและคุณธรรมจริยธรรมที่สอดคล้องกับมาตรฐานระดับประเทศ</p>
+            </div>
+
+            <!-- Interactive Tab Nav -->
+            <ul class="nav nav-pills nav-pills-purple justify-content-center mb-4 flex-wrap gap-2" id="aboutTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-philosophy-tab" data-bs-toggle="pill" data-bs-target="#tab-philosophy" type="button" role="tab"><i class="bi bi-quote me-1"></i> ปรัชญาของหลักสูตร</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-vision-tab" data-bs-toggle="pill" data-bs-target="#tab-vision" type="button" role="tab"><i class="bi bi-compass me-1"></i> วิสัยทัศน์ & พันธกิจ</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-objectives-tab" data-bs-toggle="pill" data-bs-target="#tab-objectives" type="button" role="tab"><i class="bi bi-bullseye me-1"></i> วัตถุประสงค์หลักสูตร</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-plo-tab" data-bs-toggle="pill" data-bs-target="#tab-plo" type="button" role="tab"><i class="bi bi-award me-1"></i> ผลลัพธ์การเรียนรู้ (PLOs)</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="aboutTabsContent">
+                <!-- Tab 1: Philosophy -->
+                <div class="tab-pane fade show active" id="tab-philosophy" role="tabpanel">
+                    <div class="p-4 p-md-5 rounded-4 text-center" style="background:linear-gradient(135deg, #f5f3ff 0%, #fae8ff 100%);border:2px solid #c084fc;box-shadow:0 10px 30px rgba(124, 58, 237, 0.12)">
+                        <i class="bi bi-quote fs-1" style="color:#7c3aed"></i>
+                        <h3 class="fw-bold mb-3" style="color:#3b0764;line-height:1.5">"เชี่ยวชาญด้านวิทยาการคอมพิวเตอร์ มีคุณธรรม นำนวัตกรรมเพื่อพัฒนาท้องถิ่น"</h3>
+                        <p class="text-secondary mb-0 mx-auto" style="max-width:800px;font-size:1.08rem;line-height:1.8">
+                            ปรัชญานี้สะท้อนอัตลักษณ์สำคัญ 3 ด้าน ได้แก่ <strong>ความเชี่ยวชาญในวิชาชีพคอมพิวเตอร์</strong> · <strong>การมีคุณธรรมจริยธรรมวิชาชีพ</strong> · และ <strong>การพัฒนานวัตกรรมนำไปใช้พัฒนาท้องถิ่น</strong> ซึ่งเชื่อมโยงโดยตรงกับวิสัยทัศน์พันธกิจเพื่อการร่วมขับเคลื่อนสังคมท้องถิ่นของมหาวิทยาลัยราชภัฏศรีสะเกษ
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Vision & Mission -->
+                <div class="tab-pane fade" id="tab-vision" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 h-100" style="background:#f3e8ff;border:1px solid #c084fc">
+                                <h4 class="fw-bold mb-3" style="color:#4c1d95"><i class="bi bi-eye-fill me-2" style="color:#8b5cf6"></i> วิสัยทัศน์ (Vision)</h4>
+                                <p class="text-secondary mb-0 fs-6 leading-relaxed">
+                                    เป็นสาขาวิชาชั้นนำด้านการจัดการศึกษาและวิจัยประยุกต์ด้านวิทยาการคอมพิวเตอร์ เพื่อสร้างสรรค์นวัตกรรมดิจิทัลขับเคลื่อนการพัฒนาเศรษฐกิจและสังคมท้องถิ่นในภาคตะวันออกเฉียงเหนือสู่ระดับสากล
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 h-100" style="background:#fae8ff;border:1px solid #f472b6">
+                                <h4 class="fw-bold mb-3" style="color:#831843"><i class="bi bi-flag-fill me-2" style="color:#ec4899"></i> พันธกิจ (Mission)</h4>
+                                <ul class="mb-0 text-secondary ps-3 fs-6">
+                                    <li class="mb-2">ผลิตบัณฑิตสาขาวิทยาการคอมพิวเตอร์ที่มีทักษะปฏิบัติการขั้นสูงและคุณธรรมวิชาชีพ</li>
+                                    <li class="mb-2">สร้างงานวิจัยและนวัตกรรมด้าน AI, Data Science และ Software Engineering</li>
+                                    <li>ให้บริการวิชาการและถ่ายทอดเทคโนโลยีแก่ชุมชนและองค์กรในท้องถิ่น</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Objectives -->
+                <div class="tab-pane fade" id="tab-objectives" role="tabpanel">
+                    <div class="p-4 rounded-4" style="background:#e0e7ff;border:1px solid #a5b4fc">
+                        <h4 class="fw-bold mb-3" style="color:#1e1b4b"><i class="bi bi-bullseye me-2" style="color:#6366f1"></i> วัตถุประสงค์ของหลักสูตร (Program Objectives)</h4>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <h6 class="fw-bold text-primary mb-1">1. สร้างนักพัฒนาซอฟต์แวร์</h6>
+                                    <small class="text-muted">ความสามารถในการวิเคราะห์ ออกแบบ และเขียนโปรแกรมประยุกต์ได้จริง</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <h6 class="fw-bold text-success mb-1">2. เชี่ยวชาญเทคโนโลยีใหม่</h6>
+                                    <small class="text-muted">ทักษะด้าน Cloud, Big Data, AI และความปลอดภัยไซเบอร์</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <h6 class="fw-bold text-purple mb-1" style="color:#7c3aed">3. มีคุณธรรมวิชาชีพ</h6>
+                                    <small class="text-muted">การตระหนักถึงจริยธรรมดิจิทัล กฎหมายคอมพิวเตอร์ และจรรยาบรรณ</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: PLOs -->
+                <div class="tab-pane fade" id="tab-plo" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 bg-white rounded-3 border h-100 shadow-sm" style="border-color:#e9d5ff !important">
+                                <span class="badge bg-purple-glow mb-2" style="color:#7c3aed">PLO 1</span>
+                                <h6 class="fw-bold mb-1">วิเคราะห์และออกแบบซอฟต์แวร์</h6>
+                                <small class="text-muted">ประยุกต์ทฤษฎีวิทยาการคอมพิวเตอร์เพื่อแก้ปัญหาโจทย์อุตสาหกรรม</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 bg-white rounded-3 border h-100 shadow-sm" style="border-color:#e9d5ff !important">
+                                <span class="badge bg-purple-glow mb-2" style="color:#7c3aed">PLO 2</span>
+                                <h6 class="fw-bold mb-1">พัฒนา Web & Mobile Application</h6>
+                                <small class="text-muted">เขียนโปรแกรมภาษา Python, Java, JavaScript และการเชื่อมต่อ APIs</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 bg-white rounded-3 border h-100 shadow-sm" style="border-color:#e9d5ff !important">
+                                <span class="badge bg-purple-glow mb-2" style="color:#7c3aed">PLO 3</span>
+                                <h6 class="fw-bold mb-1">บริหารจัดการระบบคลาวด์และเครือข่าย</h6>
+                                <small class="text-muted">ดูแลโครงสร้างพื้นฐานไอที ระบบฐานข้อมูล และความปลอดภัยสารสนเทศ</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 bg-white rounded-3 border h-100 shadow-sm" style="border-color:#e9d5ff !important">
+                                <span class="badge bg-purple-glow mb-2" style="color:#7c3aed">PLO 4</span>
+                                <h6 class="fw-bold mb-1">จริยธรรมและทำงานร่วมกับผู้อื่น</h6>
+                                <small class="text-muted">มีทักษะการทำงานเป็นทีม สื่อสารวิชาการ และจรรยาบรรณนักคอมพิวเตอร์</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Ultra-Modern Bento Grid Highlights -->
+    <section class="section-padding" style="background-color:#faf5ff">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-tag"><i class="bi bi-grid-3x3-gap me-1"></i> WHY CHOOSE CS@SSKRU</span>
+                <h2 class="section-title">ทำไมต้องเรียนวิทยาการคอมพิวเตอร์ ?</h2>
+                <p class="section-subtitle">ผสานทฤษฎีเทคโนโลยีขั้นสูงเข้ากับการลงมือปฏิบัติการจริง เพื่อสร้างเส้นทางอาชีพไอทีที่เติบโตและมั่นคง</p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="bento-card">
+                        <div class="bento-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                        <h5 class="fw-bold mb-2">งานตอบโจทย์อนาคตเติบโตสูง</h5>
+                        <p class="text-muted fs-6 mb-0">โอกาสกว้างขวางในตลาดงานไอที เช่น การพัฒนาซอฟต์แวร์, เว็บไซต์แบบ Full-stack, ระบบคลาวด์ และโครงสร้างข้อมูลขนาดใหญ่</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bento-card">
+                        <div class="bento-icon"><i class="bi bi-cash-stack"></i></div>
+                        <h5 class="fw-bold mb-2">แรงงานอันดับหนึ่ง ผลตอบแทนมั่นคง</h5>
+                        <p class="text-muted fs-6 mb-0">สายอาชีพดิจิทัลและเทคโนโลยีมีอัตราเงินเดือนเริ่มต้นและอัตราการเติบโตเฉลี่ยที่สูงกว่าวิชาชีพอื่นอย่างเด่นชัด</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bento-card">
+                        <div class="bento-icon"><i class="bi bi-globe2"></i></div>
+                        <h5 class="fw-bold mb-2">อิสรภาพในการทำงาน</h5>
+                        <p class="text-muted fs-6 mb-0">สามารถเลือกรูปแบบทำงานออนไลน์จากทุกมุมโลก (Remote Work) ประกอบอาชีพฟรีแลนซ์ หรือก้าวสู่นักธุรกิจเทคโนโลยีสตาร์ทอัป</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bento-card" style="background:linear-gradient(135deg, #180930 0%, #4c1d95 100%);color:#ffffff">
+                        <i class="bi bi-award-fill fs-1 text-warning mb-3"></i>
+                        <h4 class="fw-bold text-white mb-2">🏆 การรับรองมาตรฐาน AUN-QA</h4>
+                        <p class="text-purple-200 fs-6 mb-0">ผลการประเมินคุณภาพการศึกษาระดับหลักสูตรตามมาตรฐาน AUN-QA ปีการศึกษา 2568 ระดับคะแนนความพึงพอใจดีเยี่ยม ณ คณะศิลปศาสตร์และวิทยาศาสตร์ มรภ.ศรีสะเกษ</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bento-card" style="background:linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);color:#ffffff">
+                        <i class="bi bi-cpu-fill fs-1 text-white mb-3"></i>
+                        <h4 class="fw-bold text-white mb-2">🤖 การแข่งขันหุ่นยนต์ศรีสะเกษโรโบติกส์</h4>
+                        <p class="text-white fs-6 mb-0">จัดแข่งขันหุ่นยนต์เยาวชนชิงถ้วยเกียรติยศสูงสุด รวมทั้งสิ้น 33 รายการ สำหรับระดับการศึกษาขั้นพื้นฐาน อาชีวศึกษา และอุดมศึกษาทั่วประเทศ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Courses / Programs & Core Subjects Track -->
+    <section class="section-padding bg-white" id="courses">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-tag"><i class="bi bi-book-open me-1"></i> ACADEMIC PROGRAMS</span>
+                <h2 class="section-title">โครงสร้างหลักสูตรและวิชาเรียน</h2>
+                <p class="section-subtitle">ข้อมูลรายละเอียดวิชาเรียนในสาขาวิชาฯ เพื่อปูทางให้เกิดทักษะความชำนาญเฉพาะด้านตามความต้องการของตลาดไอที</p>
+            </div>
+
+            <div class="row g-4 mb-5">
+                {% if courses %}
+                    {% for course in courses %}
+                    <div class="col-lg-6">
+                        <div class="course-card">
+                            <div class="course-header">
+                                <span class="course-level-badge"><i class="bi bi-award me-1"></i> {{ course.level }}</span>
+                                <h3 class="course-title"><i class="fa-solid {{ course.icon|default:'fa-laptop-code' }} me-2"></i> {{ course.name }}</h3>
+                                <div class="course-meta">
+                                    <span><i class="bi bi-clock me-1"></i> {{ course.duration }}</span>
+                                    <span><i class="bi bi-journal-code me-1"></i> {{ course.credits }}</span>
+                                    {% if course.degree_title %}<span><i class="bi bi-certificate me-1"></i> {{ course.degree_title }}</span>{% endif %}
+                                </div>
+                            </div>
+                            <div class="course-body">
+                                <h6 class="fw-bold text-purple mb-2" style="color:#7c3aed"><i class="bi bi-info-circle me-1"></i> รายละเอียดหลักสูตร</h6>
+                                <p class="text-secondary fs-6 mb-3">{{ course.description }}</p>
+
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-briefcase me-1"></i> โอกาสและแนวทางการประกอบอาชีพ</h6>
+                                <div class="p-3 rounded-3" style="background:#f3e8ff">
+                                    <p class="text-secondary fs-6 mb-0">{{ course.career_opportunities|linebreaksbr }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Core Subjects Grid -->
+            <div class="p-4 bg-white rounded-4 shadow-sm border" style="border-color:#e9d5ff !important">
+                <h4 class="fw-bold text-dark mb-4"><i class="bi bi-pc-display-horizontal me-2" style="color:#7c3aed"></i> วิชาหลักโดดเด่นในสาขาวิชา (Core CS Subjects)</h4>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="p-3 rounded-3 border h-100" style="background:#faf5ff">
+                            <div class="d-flex align-items-center gap-2 mb-2" style="color:#7c3aed">
+                                <i class="bi bi-network-wired fs-4"></i>
+                                <h6 class="fw-bold mb-0 text-dark">โครงข่ายคอมพิวเตอร์</h6>
+                            </div>
+                            <small class="text-muted">เรียนรู้การออกแบบ ติดตั้ง และบำรุงรักษาระบบเครือข่าย ทั้งแบบสายและไร้สาย [มีห้องแล็บปฏิบัติการ]</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="p-3 rounded-3 border h-100" style="background:#faf5ff">
+                            <div class="d-flex align-items-center gap-2 mb-2" style="color:#7c3aed">
+                                <i class="bi bi-shield-lock fs-4"></i>
+                                <h6 class="fw-bold mb-0 text-dark">ความปลอดภัยสารสนเทศ</h6>
+                            </div>
+                            <small class="text-muted">ป้องกันและควบคุมความปลอดภัยข้อมูล การเข้ารหัสลับ และการตรวจจับผู้บุกรุก</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="p-3 rounded-3 border h-100" style="background:#faf5ff">
+                            <div class="d-flex align-items-center gap-2 mb-2" style="color:#7c3aed">
+                                <i class="bi bi-database fs-4"></i>
+                                <h6 class="fw-bold mb-0 text-dark">พัฒนาระบบฐานข้อมูล</h6>
+                            </div>
+                            <small class="text-muted">ออกแบบระบบฐานข้อมูล SQL, NoSQL และการบริหารจัดการข้อมูลขนาดใหญ่ [มีห้องแล็บปฏิบัติการ]</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="p-3 rounded-3 border h-100" style="background:#faf5ff">
+                            <div class="d-flex align-items-center gap-2 mb-2" style="color:#7c3aed">
+                                <i class="bi bi-robot fs-4"></i>
+                                <h6 class="fw-bold mb-0 text-dark">ปัญญาประดิษฐ์ (AI)</h6>
+                            </div>
+                            <small class="text-muted">เรียนรู้การสร้างโมเดล Machine Learning, Deep Learning และ Computer Vision [มีห้องแล็บปฏิบัติการ]</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 4-Year Study Plan Section -->
+    <section class="section-padding" style="background-color:#faf5ff" id="schedule">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-tag"><i class="bi bi-calendar-check me-1"></i> STUDY PLAN</span>
+                <h2 class="section-title">แผนการศึกษาและตารางวิชาเรียน 4 ปี</h2>
+                <p class="section-subtitle">ตัวอย่างตารางวิชาหลักในการเรียนในแต่ละชั้นปีการศึกษา (หน่วยกิตรวมไม่น้อยกว่า 133 หน่วยกิต)</p>
+            </div>
+
+            <!-- Interactive Year Switcher Pill Tabs -->
+            <ul class="nav nav-pills nav-pills-purple justify-content-center mb-4 flex-wrap gap-2" id="planTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="year12-tab" data-bs-toggle="pill" data-bs-target="#year12-content" type="button" role="tab"><i class="bi bi-calendar3 me-1"></i> ชั้นปีที่ 1 และ ชั้นปีที่ 2</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="year34-tab" data-bs-toggle="pill" data-bs-target="#year34-content" type="button" role="tab"><i class="bi bi-rocket-takeoff me-1"></i> ชั้นปีที่ 3 และ ชั้นปีที่ 4 </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="planTabsContent">
+                <!-- Tab Pane 1: Year 1 & 2 -->
+                <div class="tab-pane fade show active" id="year12-content" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #180930 0%, #4c1d95 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill text-pink me-2" style="color:#f472b6"></i> ชั้นปีที่ 1 - ภาคเรียนที่ 1</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS101</td><td>พื้นฐานวิทยาการคอมพิวเตอร์</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS102</td><td>การเขียนโปรแกรมเบื้องต้น (Python)</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">MA111</td><td>คณิตศาสตร์ดิสครีต</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">GE101</td><td>ภาษาอังกฤษเพื่อการสื่อสาร</td><td class="text-center"><span class="badge bg-purple-subtle text-purple" style="background:#f3e8ff;color:#7c3aed">วิชาศึกษาทั่วไป</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #180930 0%, #4c1d95 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill text-pink me-2" style="color:#f472b6"></i> ชั้นปีที่ 1 - ภาคเรียนที่ 2</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS103</td><td>การเขียนโปรแกรมเชิงวัตถุ (Java)</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS104</td><td>โครงสร้างข้อมูลและอัลกอริทึม</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">MA112</td><td>สถิติและคณิตศาสตร์สัญกรณ์</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">GE102</td><td>ทักษะชีวิตและความเป็นพลเมือง</td><td class="text-center"><span class="badge bg-purple-subtle text-purple" style="background:#f3e8ff;color:#7c3aed">วิชาศึกษาทั่วไป</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill me-2"></i> ชั้นปีที่ 2 - ภาคเรียนที่ 1</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS201</td><td>สถาปัตยกรรมคอมพิวเตอร์และระบบปฏิบัติการ</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS202</td><td>ระบบฐานข้อมูลและการออกแบบ</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS203</td><td>วิศวกรรมซอฟต์แวร์เบื้องต้น</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS204</td><td>โครงข่ายคอมพิวเตอร์และการสื่อสาร</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill me-2"></i> ชั้นปีที่ 2 - ภาคเรียนที่ 2</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS205</td><td>การพัฒนาเว็บแอปพลิเคชัน</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS206</td><td>การวิเคราะห์และออกแบบระบบเชิงวัตถุ</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS207</td><td>ความมั่นคงปลอดภัยสารสนเทศพื้นฐาน</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS208</td><td>คณิตศาสตร์และเครื่องมือสถิติสำหรับ AI</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Pane 2: Year 3 & 4 -->
+                <div class="tab-pane fade" id="year34-content" role="tabpanel">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #180930 0%, #4c1d95 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill text-pink me-2" style="color:#f472b6"></i> ชั้นปีที่ 3 - ภาคเรียนที่ 1</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS301</td><td>การวิเคราะห์และออกแบบอัลกอริทึม</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS302</td><td>การพัฒนาแอปพลิเคชันบนอุปกรณ์เคลื่อนที่</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS303</td><td>ปัญญาประดิษฐ์และการเรียนรู้ของเครื่อง</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS304</td><td>ภูมิคุ้มกันและความเสียหายทางคอมพิวเตอร์</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #180930 0%, #4c1d95 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill text-pink me-2" style="color:#f472b6"></i> ชั้นปีที่ 3 - ภาคเรียนที่ 2</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS305</td><td>วิทยาการข้อมูลและการทำเหมืองข้อมูล</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS306</td><td>เทคโนโลยีคลาวด์และการประมวลผลกระจาย</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS307</td><td>การเตรียมความพร้อมสหกิจศึกษาและฝึกประสบการณ์</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS308</td><td>การเขียนโปรแกรมสำหรับ IoT และระบบสมองกลฝังตัว</td><td class="text-center"><span class="badge bg-purple-subtle text-purple" style="background:#f3e8ff;color:#7c3aed">วิชาเลือก</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill me-2"></i> ชั้นปีที่ 4 - ภาคเรียนที่ 1</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS401</td><td>โครงงานวิทยาการคอมพิวเตอร์ 1</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS402</td><td>สัมมนาทางวิทยาการคอมพิวเตอร์</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS403</td><td>การประมวลผลภาพดิจิทัลและคอมพิวเตอร์วิทัศน์</td><td class="text-center"><span class="badge bg-purple-subtle text-purple" style="background:#f3e8ff;color:#7c3aed">วิชาเลือก</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">GE401</td><td>ภาษาอังกฤษเพื่อวิชาชีพทางเทคโนโลยี</td><td class="text-center"><span class="badge bg-purple-subtle text-purple" style="background:#f3e8ff;color:#7c3aed">วิชาศึกษาทั่วไป</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="card-header text-white p-3" style="background:linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)">
+                                    <h5 class="fw-bold mb-0"><i class="bi bi-clock-fill me-2"></i> ชั้นปีที่ 4 - ภาคเรียนที่ 2</h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered mb-0 align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width:90px" class="text-center">รหัสวิชา</th>
+                                                <th>ชื่อรายวิชาเรียน</th>
+                                                <th style="width:150px" class="text-center">หมวดหมู่รายวิชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS405</td><td>สหกิจศึกษาทางวิทยาการคอมพิวเตอร์</td><td class="text-center"><span class="badge bg-success">สหกิจศึกษา (6 นก.)</span></td></tr>
+                                            <tr><td class="text-center fw-bold" style="color:#7c3aed">CS406</td><td>โครงงานวิทยาการคอมพิวเตอร์ 2</td><td class="text-center"><span class="badge bg-secondary">วิชาเฉพาะสาขา</span></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Official Faculty Showcase (With Academic Modals & Animated Cards) -->
+    <section class="section-padding bg-white" id="lecturers">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge rounded-pill badge-purple-glow px-3 py-2 mb-2 fw-semibold" style="font-size:0.95rem">🎓 คณาจารย์ผู้ทรงคุณวุฒิและเชี่ยวชาญเฉพาะทาง</span>
+                <h2 class="section-title">อาจารย์ประจำหลักสูตร</h2>
+                <p class="section-subtitle">คณาจารย์ผู้รับผิดชอบหลักสูตรและคณาจารย์ประจำสาขาวิชา ร่วมขับเคลื่อนการจัดการเรียนการสอนและนวัตกรรมใหม่</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                {% if faculty_list %}
+                    {% for faculty in faculty_list %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="faculty-card-v2">
+                            <!-- Animated Gradient Border -->
+                            <div class="faculty-card-glow"></div>
+                            <div class="faculty-card-inner">
+                                <!-- Avatar with Pulse Ring -->
+                                <div class="faculty-avatar-v2-wrap">
+                                    <div class="faculty-avatar-ring"></div>
+                                    <img src="{% if faculty.image %}{{ faculty.image.url }}{% else %}https://api.dicebear.com/7.x/avataaars/svg?seed={{ faculty.name|urlencode }}{% endif %}" alt="{{ faculty.name }}" class="faculty-avatar-v2">
+                                </div>
+
+                                <!-- Name & Rank -->
+                                <span class="faculty-rank-v2">{{ faculty.academic_rank }}</span>
+                                <h5 class="faculty-name-v2">{{ faculty.name }}</h5>
+
+                                <!-- Expertise Tags (ความเชี่ยวชาญ) -->
+                                <div class="faculty-expertise-tags">
+                                    <span class="expertise-tag"><i class="bi bi-lightbulb-fill me-1"></i> ความเชี่ยวชาญ</span>
+                                    <span class="expertise-value">{{ faculty.expertise|default:"วิทยาการคอมพิวเตอร์" }}</span>
+                                </div>
+
+                                <!-- Position -->
+                                <p class="faculty-position-v2"><i class="bi bi-briefcase-fill me-1" style="color:#d946ef"></i> {{ faculty.position }}</p>
+
+                                <!-- View Profile Button -->
+                                <button type="button" class="btn btn-faculty-v2" data-bs-toggle="modal" data-bs-target="#facultyModal{{ faculty.id }}">
+                                    <i class="bi bi-person-lines-fill me-1"></i> ดูประวัติและผลงานวิชาการ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Profile Modal -->
+                    <div class="modal fade" id="facultyModal{{ faculty.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal-content-purple border-0">
+                                <div class="modal-header modal-header-purple p-4">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{% if faculty.image %}{{ faculty.image.url }}{% else %}https://api.dicebear.com/7.x/avataaars/svg?seed={{ faculty.name|urlencode }}{% endif %}" alt="{{ faculty.name }}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #ffffff">
+                                        <div>
+                                            <h5 class="modal-title fw-bold text-white mb-0">{{ faculty.academic_rank }} {{ faculty.name }}</h5>
+                                            <small class="text-purple-200">{{ faculty.position }}</small>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <h6 class="fw-bold text-purple mb-2" style="color:#7c3aed"><i class="bi bi-mortarboard-fill me-1"></i> วุฒิการศึกษา / คุณวุฒิวิชาการ</h6>
+                                    <p class="text-secondary fs-6 mb-3">{{ faculty.education|default:"ปริญญาเอก / ปริญญาโท ด้านคอมพิวเตอร์และเทคโนโลยี" }}</p>
+
+                                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-star-fill text-warning me-1"></i> ความเชี่ยวชาญเฉพาะด้าน</h6>
+                                    <div class="p-3 rounded-3" style="background:#f3e8ff">
+                                        <p class="text-secondary fs-6 mb-0">{{ faculty.expertise|default:faculty.position }}</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0">
+                                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Contact & Social Channel Hub Section -->
+    <footer class="footer-section" id="contact">
+        <div class="container">
+            <!-- Section Header: ติดต่อเรา -->
+            <div class="text-center mb-4">
+                <span class="badge rounded-pill badge-purple-glow px-3 py-2 mb-2 fw-semibold" style="font-size:0.95rem">
+                    <i class="bi bi-chat-left-dots-fill me-1" style="color:#d946ef"></i> ติดต่อเรา &amp; เครือข่ายดิจิทัล
+                </span>
+                <h2 class="text-white fw-bold display-6 mb-2">ติดต่อเรา</h2>
+                <p class="text-slate-300 mx-auto" style="max-width:650px;font-size:0.95rem">
+                    ช่องทางติดต่อสอบถามข้อมูลการรับสมัคร ข่าวสารกิจกรรม และสื่อโซเชียลมีเดียของสาขาวิชาฯ
+                </p>
+            </div>
+
+            <!-- Ultra-Modern 2x2 Bento Channel Showcase Grid -->
+            <div class="row g-4 mb-5">
+                <!-- 1. LINE AI Chatbot Card -->
+                <div class="col-lg-6">
+                    <div class="channel-bento-card line-card">
+                        <div class="channel-bento-inner">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="channel-icon-hub icon-line">
+                                    <i class="bi bi-line"></i>
+                                </div>
+                                <div>
+                                    <span class="channel-badge-pill channel-badge-line mb-1"><i class="bi bi-robot me-1"></i> AI Assistant 24 ชั่วโมง</span>
+                                    <h5 class="text-white fw-bold mb-0">สอบถามข้อมูลด้วย LINE AI Chatbot</h5>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 mb-4" style="font-size:0.92rem;line-height:1.7">
+                                สอบถามรายละเอียดการรับสมัคร ทุนการศึกษา กติกาโครงงาน ขึ้นทะเบียนนักศึกษา และค่าเทอมได้คำตอบรวดเร็วตลอด 24 ชั่วโมง
+                            </p>
+                            <a href="https://line.me/R/ti/p/@793ozxpi?oat_content=url&amp;ts=05271601" target="_blank" class="btn btn-channel-line w-100 py-2.5 rounded-pill text-center">
+                                <i class="bi bi-line me-1"></i> เพิ่มเพื่อนใน LINE  <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. SSKRU Main University Portal Card -->
+                <div class="col-lg-6">
+                    <div class="channel-bento-card sskru-card">
+                        <div class="channel-bento-inner">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="channel-icon-hub icon-sskru">
+                                    <i class="bi bi-bank2"></i>
+                                </div>
+                                <div>
+                                    <span class="channel-badge-pill badge-sskru mb-1"><i class="bi bi-building me-1"></i> สถาบันอุดมศึกษาเพื่อท้องถิ่น</span>
+                                    <h5 class="text-white fw-bold mb-0">เว็บไซต์หลัก มหาวิทยาลัยราชภัฏศรีสะเกษ</h5>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 mb-4" style="font-size:0.92rem;line-height:1.7">
+                                เข้าชมข่าวสารสถาบัน พันธกิจหลักมหาวิทยาลัย การบริหารจัดการ และบริการทางการศึกษา มรภ.ศรีสะเกษ (SSKRU Main Portal)
+                            </p>
+                            <a href="https://www.sskru.ac.th" target="_blank" class="btn btn-channel-sskru w-100 py-2.5 rounded-pill text-center">
+                                <i class="bi bi-globe me-1"></i> เข้าชมเว็บไซต์ SSKRU <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Facebook Fanpage Card -->
+                <div class="col-lg-6">
+                    <div class="channel-bento-card fb-card">
+                        <div class="channel-bento-inner">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="channel-icon-hub icon-fb">
+                                    <i class="bi bi-facebook"></i>
+                                </div>
+                                <div>
+                                    <span class="channel-badge-pill channel-badge-fb mb-1"><i class="bi bi-megaphone-fill me-1"></i> ประชาสัมพันธ์และกิจกรรม</span>
+                                    <h5 class="text-white fw-bold mb-0">ติดตามข่าวสารผ่าน Facebook Fanpage</h5>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 mb-4" style="font-size:0.92rem;line-height:1.7">
+                                ติดตามข่าวสารความเคลื่อนไหว กิจกรรมสาขาฯ ผลงานนักศึกษา ทุนการศึกษา การแข่งขันวิชาการ และภาพบรรยากาศการเรียน
+                            </p>
+                            <a href="https://www.facebook.com/comsci.sskru" target="_blank" class="btn btn-channel-fb w-100 py-2.5 rounded-pill text-center">
+                                <i class="bi bi-facebook me-1"></i> ติดตามแฟนเพจบน Facebook <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. TikTok Official Channel Card -->
+                <div class="col-lg-6">
+                    <div class="channel-bento-card tiktok-card">
+                        <div class="channel-bento-inner">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="channel-icon-hub icon-tiktok">
+                                    <i class="bi bi-tiktok"></i>
+                                </div>
+                                <div>
+                                    <span class="channel-badge-pill channel-badge-tiktok mb-1"><i class="bi bi-play-btn-fill me-1"></i> คลิปสั้น แนะนำหลักสูตร</span>
+                                    <h5 class="text-white fw-bold mb-0">ชมคลิปประชาสัมพันธ์ผ่าน TikTok</h5>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 mb-4" style="font-size:0.92rem;line-height:1.7">
+                                ชมคลิปแนะนำบรรยากาศการเรียน กิจกรรมนักศึกษา ผลงานโครงงาน และไฮไลท์สาขาวิชาฯ ในรูปแบบวิดีโอสั้นสไตล์วัยรุ่น
+                            </p>
+                            <a href="https://www.tiktok.com/@comsciencesskru" target="_blank" class="btn btn-channel-tiktok w-100 py-2.5 rounded-pill text-center">
+                                <i class="bi bi-tiktok me-1"></i> ติดตามบน TikTok  <i class="bi bi-box-arrow-up-right ms-1 fs-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <img src="{% static 'core/images/logo.png' %}" alt="CS SSKRU Logo" style="width:48px;height:48px;filter:drop-shadow(0 2px 8px rgba(217,70,239,0.5))">
+                        <h3 class="footer-brand-title mb-0">วิทยาการคอมพิวเตอร์ มรภ.ศรีสะเกษ</h3>
+                    </div>
+                    <p class="text-slate-300 mb-4" style="font-size:0.95rem">
+                        "ก้าวสู่อนาคตทางเทคโนโลยี สร้างสรรค์ซอฟต์แวร์แห่งนวัตกรรม"<br>
+                        สาขาวิชาวิทยาการคอมพิวเตอร์ คณะศิลปศาสตร์และวิทยาศาสตร์ มหาวิทยาลัยราชภัฏศรีสะเกษ
+                    </p>
+
+                    <div class="footer-contact-item">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <div>
+                            <strong class="text-white">สถานที่ตั้ง:</strong> ชั้น 5 อาคารสำนักงานคณบดี คณะศิลปศาสตร์และวิทยาศาสตร์ (LASC) มรภ.ศรีสะเกษ 319 ถ.ไทยพันทา ต.โพธิ์ อ.เมือง จ.ศรีสะเกษ 33000
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-item">
+                        <i class="bi bi-telephone-fill"></i>
+                        <div>
+                            <strong class="text-white">เบอร์โทรติดต่อสาขาวิชาฯ:</strong> 043-009700 ต่อ 50528, สายด่วน: 084-298-2456
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <div>
+                            <strong class="text-white">อีเมลสาขาวิชาฯ:</strong> phisan.s@sskru.ac.th
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-item">
+                        <i class="bi bi-person-badge-fill"></i>
+                        <div>
+                            <strong class="text-white">หัวหน้าสาขาวิชาฯ:</strong> ผู้ช่วยศาสตราจารย์ ดร.กนิษฐา อินธิชิต
+                        </div>
+                    </div>
+
+                    <!-- University & Admissions Direct Portal Cards -->
+                    <div class="p-4 rounded-4 mb-4" style="background:rgba(255,255,255,0.06);border:1px solid rgba(217,70,239,0.35);backdrop-filter:blur(10px)">
+                        <h5 class="text-white fw-bold mb-3"><i class="bi bi-mortarboard-fill text-pink me-2" style="color:#f472b6"></i> ช่องทางสมัครเข้าเรียน &amp; เว็บไซต์มหาวิทยาลัย</h5>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="https://www.oass.sskru.ac.th/std.sskru/s1.html" target="_blank" class="btn btn-purple-gradient w-100 text-start py-2 px-3 rounded-3 d-flex align-items-center justify-content-between fw-semibold">
+                                <span><i class="bi bi-person-plus-fill me-2"></i> ระบบรับสมัครนักศึกษาใหม่ มรภ.ศรีสะเกษ</span>
+                                <i class="bi bi-box-arrow-up-right fs-6"></i>
+                            </a>
+                            <a href="https://www.sskru.ac.th" target="_blank" class="btn btn-outline-light w-100 text-start py-2 px-3 rounded-3 d-flex align-items-center justify-content-between text-slate-200">
+                                <span><i class="bi bi-globe me-2" style="color:#f472b6"></i> เว็บไซต์หลัก มหาวิทยาลัยราชภัฏศรีสะเกษ (SSKRU)</span>
+                                <i class="bi bi-box-arrow-up-right fs-6"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <h4 class="text-white fw-bold mb-3"><i class="bi bi-geo-alt-fill me-2" style="color:#f472b6"></i> แผนที่มหาวิทยาลัยราชภัฏศรีสะเกษ (SSKRU Location Pin)</h4>
+                    <div class="map-container">
+                        <!-- Embedded Google Map with Direct SSKRU Pin -->
+                        <iframe
+                            src="https://maps.google.com/maps?q=%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%A5%E0%B8%B1%E0%B8%A2%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%8F%E0%B8%A8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B0%E0%B9%80%E0%B8%81%E0%B8%A9&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                            width="100%"
+                            height="310"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="mt-3 text-end">
+                        <a href="https://maps.google.com/?q=%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%A5%E0%B8%B1%E0%B8%A2%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%8F%E0%B8%A8%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%B0%E0%B9%80%E0%B8%81%E0%B8%A9" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                            <i class="bi bi-map me-1" style="color:#f472b6"></i> เปิดดูบน Google Maps (ขยายใหญ่) <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom border-top border-secondary border-opacity-25 pt-4 pb-4">
+                <div class="row align-items-center g-3">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0 text-slate-300" style="font-size:0.88rem">&copy; 2026 สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยราชภัฏศรีสะเกษ All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill flex-wrap justify-content-center justify-content-md-end" style="background:rgba(255,255,255,0.06);border:1px solid rgba(217,70,239,0.3);font-size:0.85rem">
+                            <span style="color:#f472b6"><i class="bi bi-code-slash me-1"></i> พัฒนาโดย:</span>
+                            <span class="text-white fw-semibold">นายเนติพงศ์ ธรรมมา · นายปุรเชษฐ์ พูลสุข · นางสาวปิยภรณ์ ทวีสัตย์</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Interactive IDE Tab Switcher Script (ลูกเล่นเปลี่ยนแท็บโค้ดแบบเรียลไทม์) -->
+    <script>
+        function switchIdeTab(type, btnElement) {
+            // Remove active state from all tab buttons
+            const buttons = document.querySelectorAll('.ide-tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active state to clicked button
+            btnElement.classList.add('active');
+
+            const container = document.getElementById('ideCodeContainer');
+            
+            if (type === 'python') {
+                container.innerHTML = `
+                    <div><span class="ide-line-num">1</span><span class="code-comment"># CS@SSKRU Department Core Engine</span></div>
+                    <div><span class="ide-line-num">2</span><span class="code-keyword">from</span> sskru <span class="code-keyword">import</span> Innovation, AI</div>
+                    <div><span class="ide-line-num">3</span></div>
+                    <div><span class="ide-line-num">4</span><span class="code-keyword">class</span> <span class="code-func">Developer</span>:</div>
+                    <div><span class="ide-line-num">5</span>    <span class="code-keyword">def</span> <span class="code-func">__init__</span>(self):</div>
+                    <div><span class="ide-line-num">6</span>        self.skills = [<span class="code-string">"Full-Stack"</span>, <span class="code-string">"AI/ML"</span>, <span class="code-string">"CyberSec"</span>]</div>
+                    <div><span class="ide-line-num">7</span>        self.motto = <span class="code-string">"เชี่ยวชาญ มีคุณธรรม นำนวัตกรรม"</span></div>
+                    <div><span class="ide-line-num">8</span></div>
+                    <div><span class="ide-line-num">9</span>    <span class="code-keyword">def</span> <span class="code-func">build_future</span>(self):</div>
+                    <div><span class="ide-line-num">10</span>        <span class="code-keyword">return</span> <span class="code-string">"🚀 Ready to Code the Future!"</span></div>
+                    <div><span class="ide-line-num">11</span></div>
+                    <div><span class="ide-line-num">12</span>student = <span class="code-func">Developer</span>()</div>
+                    <div><span class="ide-line-num">13</span>print(student.<span class="code-func">build_future</span>())
+                `;
+            } else if (type === 'ai') {
+                container.innerHTML = `
+                    <div><span class="ide-line-num">1</span><span class="code-comment"># AI & Vision Neural Network</span></div>
+                    <div><span class="ide-line-num">2</span><span class="code-keyword">import</span> torch</div>
+                    <div><span class="ide-line-num">3</span><span class="code-keyword">import</span> torch.nn <span class="code-keyword">as</span> nn</div>
+                    <div><span class="ide-line-num">4</span></div>
+                    <div><span class="ide-line-num">5</span>model = nn.<span class="code-func">Sequential</span>(</div>
+                    <div><span class="ide-line-num">6</span>    nn.<span class="code-func">Linear</span>(512, 256),</div>
+                    <div><span class="ide-line-num">7</span>    nn.<span class="code-func">ReLU</span>(),</div>
+                    <div><span class="ide-line-num">8</span>    nn.<span class="code-func">Linear</span>(256, 100)</div>
+                    <div><span class="ide-line-num">9</span>)</div>
+                    <div><span class="ide-line-num">10</span>accuracy = <span class="code-string">"99.4%"</span></div>
+                    <div><span class="ide-line-num">11</span>print(<span class="code-string">f"✨ AI Model Accuracy: {accuracy}"</span>)
+                `;
+            } else if (type === 'cloud') {
+                container.innerHTML = `
+                    <div><span class="ide-line-num">1</span><span class="code-comment"># CS@SSKRU Cloud Deployment Pipeline</span></div>
+                    <div><span class="ide-line-num">2</span><span class="code-keyword">echo</span> <span class="code-string">"🐳 Building Docker Container..."</span></div>
+                    <div><span class="ide-line-num">3</span>docker build -t cs-sskru-app .</div>
+                    <div><span class="ide-line-num">4</span></div>
+                    <div><span class="ide-line-num">5</span><span class="code-keyword">echo</span> <span class="code-string">"☸️ Deploying to Kubernetes Cluster..."</span></div>
+                    <div><span class="ide-line-num">6</span>kubectl apply -f sskru-cluster.yaml</div>
+                    <div><span class="ide-line-num">7</span></div>
+                    <div><span class="ide-line-num">8</span><span class="code-keyword">echo</span> <span class="code-string">"🟢 SYSTEM DEPLOYED &amp; LIVE AT PORT 8000"</span></div>
+                `;
+            }
+        }
+
+        // Auto-close mobile navbar menu on link click
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const navbarCollapse = document.getElementById('navbarResponsive');
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                    if (bsCollapse) {
+                        bsCollapse.hide();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

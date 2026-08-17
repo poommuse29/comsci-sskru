@@ -1,0 +1,16 @@
+# Python & Virtualenv
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+
+# Django
+*.log
+local_settings.py
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
